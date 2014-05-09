@@ -1,0 +1,42 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>AVaughan Angular Logger Example Page</title>
+  <meta name="description" content="angular lib for logging, wraps $log and allows logging thresholds and categories via a simple config">
+
+  <!-- Author of this application -->
+  <link rel="author" href="https://github.com/aronvaughan"> 
+
+</head>
+
+<body ontouchstart ng-app="myApp">
+
+  <div ng-controller="testController">
+
+  </div>
+
+  <div my-directive></div>
+
+  <!-- build:js scripts/components.min.js -->
+  <!-- bower:js -->
+  <script src="../../bower_components/angular/angular.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js scripts/app.min.js -->
+  <script src="../angular-logging.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/testController.js"></script>
+
+  <!-- fixme move to bower -->
+  <!--
+  <script src="scripts/base/logLevel.js"></script>
+  <script src="scripts/base/logging_config.js"></script>
+  <script src="scripts/base/logging.js"></script>
+  -->
+  <!-- endbuild -->
+
+</body>
+
+</html>
