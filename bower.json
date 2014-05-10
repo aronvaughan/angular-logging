@@ -11,7 +11,7 @@
        "threshold",
        "$log"
    ],
-  "main": "angular-logging.js",
+  "main": "dist/angular-logging.min.js",
   "authors": [
       { "name": "Aron Vaughan", "homepage": "http://www.aronvaughan.com" }
    ],

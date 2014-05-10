@@ -198,6 +198,21 @@ module.exports = function(grunt) {
                 src: '<%= yo.src %>/example/index.html',
                 ignorePath: ['<%= yo.src %>/', 'bower_components']
             }
+        },
+        bump: {
+            options: {
+                files: ['package.json'],
+                updateConfigs: [],
+                commit: true,
+                commitMessage: 'Release v%VERSION%',
+                commitFiles: ['-a'], // '-a' for all files
+                createTag: true,
+                tagName: 'v%VERSION%',
+                tagMessage: 'Version %VERSION%',
+                push: true,
+                pushTo: 'origin',
+                gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
+            }
         }
     });
 
@@ -232,17 +247,17 @@ module.exports = function(grunt) {
     grunt.registerTask('release', [
         'test',
         'bump-only',
-        'dist',
+        'build',
         'bump-commit'
     ]);
 
-    grunt.registerTask('usage', 'prints usage information', function () {
-       grunt.log.writeln('=============  usage =============');
-       grunt.log.writeln('grunt serve - to see example app');
-       grunt.log.writeln('grunt clean - to clean up the project and artifacts');
-       grunt.log.writeln('grunt test - to run the tests');
-       grunt.log.writeln('grunt build - to build the distributable files');
-       grunt.log.writeln('grunt release - to bump the version, create distributables and commit to the repo and tag it');
+    grunt.registerTask('usage', 'prints usage information', function() {
+        grunt.log.writeln('=============  usage =============');
+        grunt.log.writeln('grunt serve - to see example app');
+        grunt.log.writeln('grunt clean - to clean up the project and artifacts');
+        grunt.log.writeln('grunt test - to run the tests');
+        grunt.log.writeln('grunt build - to build the distributable files');
+        grunt.log.writeln('grunt release - to bump the version, create distributables and commit to the repo and tag it');
     });
 
     grunt.registerTask('default', ['usage']);
