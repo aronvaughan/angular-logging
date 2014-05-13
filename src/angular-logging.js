@@ -44,46 +44,39 @@ AVaughanLogging.DefaultLogConfig = {
  * @param category - the name/category/channel that this log instance is identified by - should match the config category name for setting the threashold
  * @constructor
  */
-AVaughanLogging.Logger = function($log, level, category) {
+AVaughanLogging.Logger = function($log, logInstance, category) {
     this.name = 'AVaughanLogging.Logger';
     this.$log = $log;
-    this.level = level;
+    //this.level = logInstance.this.getLogLevel(this.category);
     this.category = category;
     var Level = AVaughanLogging.LogLevel;
-
     this.debug = function(message, args) {
-        if (this.level <= Level.DEBUG) {
+        if (this.getLevel() <= Level.DEBUG) {
             $log.debug('[' + this.category + '] - DEBUG: ' + message, args);
         }
     };
-
     this.info = function(message, args) {
         //console.log('log.info called', message, args, this.level);
-        if (this.level <= Level.INFO) {
+        if (this.getLevel() <= Level.INFO) {
             $log.info('[' + this.category + '] - INFO: ' + message, args);
         }
     };
-
     this.warn = function(message, args) {
-        if (this.level <= Level.WARN) {
+        if (this.getLevel() <= Level.WARN) {
             $log.warn('[' + this.category + '] - WARN: ' + message, args);
         }
     };
-
     this.error = function(message, args) {
-        if (this.level <= Level.ERROR) {
+        if (this.getLevel() <= Level.ERROR) {
             $log.error('[' + this.category + '] - ERROR ' + message, args);
         }
     };
-
     this.getLog = function() {
         return this.$log;
     };
-
     this.getLevel = function() {
-        return this.level;
+        return logInstance.getLogLevel(this.category);
     };
-
     this.getCategory = function() {
         return this.category;
     };
@@ -110,9 +103,10 @@ AVaughanLogging.Log = function($log) {
         if (!configSet) {
             configSet = true;
             this.configToConsole();
+        } else {
+            $log.warn('avLog setConfig called multiple times', config);
         }
     };
-
     /**
      * get the current levels and general settings
      * @returns {*}
@@ -134,10 +128,9 @@ AVaughanLogging.Log = function($log) {
         if (this.getConfig().category[category]) {
             level = this.getConfig().category[category];
         }
-        //console.log('log level for category', category, level);
+        //console.log('log level for category', category, level, this.getConfig());
         return level;
     };
-
     /**
      * create a logger with a given category/name
      * each category/name may have it's own threshold level set in the config
@@ -147,10 +140,9 @@ AVaughanLogging.Log = function($log) {
      * @returns {Logger}
      */
     this.getLogger = function(category) {
-        var myLogger = new AVaughanLogging.Logger(this.$log, this.getLogLevel(category), category);
+        var myLogger = new AVaughanLogging.Logger(this.$log, this, category);
         return myLogger;
     };
-
     /**
      * dump the current log config to the console
      */
@@ -181,9 +173,16 @@ AVaughanLogging.Log = function($log) {
  *
  *  angular.module('my-app', ['avaughan-logging'])
  */
-angular.module('avaughan.logging', []).
-constant('avLevel', AVaughanLogging.LogLevel).
-factory('avLog', function($log) {
-    console.log('avLogging instantiated', $log);
-    return new AVaughanLogging.Log($log);
-});
+angular.module('avaughan.logging', []).constant('avLevel', AVaughanLogging.LogLevel).factory('avLog', ['$log',
+    function($log) {
+        console.log('avLogging instantiated', $log);
+        //AV for some reason we are getting multiple of these and we can't get a handle to the AVLog in factories, force a singleton
+        if (AVaughanLogging.logInstance === undefined) {
+            AVaughanLogging.logInstance = new AVaughanLogging.Log($log);
+        } else {
+            //angular will call this once with an undefined log.... then later call again with a valid one....
+            AVaughanLogging.logInstance.$log = $log;
+        }
+        return AVaughanLogging.logInstance;
+    }
+]);

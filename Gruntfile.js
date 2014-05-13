@@ -201,7 +201,7 @@ module.exports = function(grunt) {
         },
         bump: {
             options: {
-                files: ['package.json'],
+                files: ['package.json', 'bower.json'],
                 updateConfigs: [],
                 commit: true,
                 commitMessage: 'Release v%VERSION%',
@@ -239,6 +239,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
+        'jsbeautifier:pre-test',
         'less:dist',
         'ngmin:dist',
         'uglify:dist'
