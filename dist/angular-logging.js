@@ -182,3 +182,13 @@ angular.module('avaughan.logging', []).constant('avLevel', AVaughanLogging.LogLe
     return AVaughanLogging.logInstance;
   }
 ]);
+/**
+ * abstract away the angular bootstrapping that sometimes provides an array of providers and other times
+ *
+ * @param avLogProvider
+ * @param logConfig
+ * @returns {*}
+ */
+AVaughanLogging.get = function (avLogProvider, logConfig) {
+  return avLogProvider.$get[1]().setConfig(logConfig);
+};

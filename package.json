@@ -1,6 +1,6 @@
 {
   "name": "angular-logging",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "angular lib for logging, wraps $log and allows logging thresholds and categories via a simple config",
   "keywords": [
     "angular",
