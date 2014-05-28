@@ -18,7 +18,7 @@
   "licenses": "MIT",
   "repository": {
       "type": "git",
-      "url": "git://github.com/faronvaughan/angular-logging.git"
+      "url": "git://github.com/aronvaughan/angular-logging.git"
    },
   "ignore": [
       "bower_components",
