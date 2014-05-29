@@ -106,7 +106,7 @@ AVaughanLogging.Log = function($log) {
         } else {
             if ($log) {
                 $log.warn('avLog setConfig called multiple times', config);
-            }  else {
+            } else {
                 console.log('WARN: avLog setConfig called multiple times, $log was null', config);
             }
         }
