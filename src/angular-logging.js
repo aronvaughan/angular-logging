@@ -104,7 +104,11 @@ AVaughanLogging.Log = function($log) {
             configSet = true;
             this.configToConsole();
         } else {
-            $log.warn('avLog setConfig called multiple times', config);
+            if ($log) {
+                $log.warn('avLog setConfig called multiple times', config);
+            }  else {
+                console.log('WARN: avLog setConfig called multiple times, $log was null', config);
+            }
         }
     };
     /**

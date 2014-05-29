@@ -51,6 +51,7 @@ In you app.js:
        avLogProvider.$get().setConfig(myLogConfig);
        //in other projects - this works, TODO find out why
        //avLogProvider.$get[1]().setConfig(myLogConfig);
+       //there is now a convenience method: return AVaughanLogging.get(avLogProvider, myLogConfig);
    });
 ```
 
