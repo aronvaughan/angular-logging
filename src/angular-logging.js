@@ -7,7 +7,11 @@
  * namespace to avoid collisions with other libraries
  * @type {*|{}}
  */
-var AVaughanLogging = AVaughanLogging || {};
+var AVaughanLogging = AVaughanLogging || {
+
+
+
+};
 
 /**
  * constants describing the current available logging levels
